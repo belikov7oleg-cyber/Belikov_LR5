@@ -1,61 +1,69 @@
-# The command that runs the program. If the interpreter field is set, it will have priority and this run command will do nothing
+# БЛОК 1: КОМАНДА ЗАПУСКА ПРИЛОЖЕНИЯ
+# Определяет, какая команда выполняется при нажатии кнопки "Run"
 run = "python3 main.py"
-
-# The primary language of the repl. There can be others, though!
+# БЛОК 2: ЯЗЫК ПРОГРАММИРОВАНИЯ И ТОЧКА ВХОДА
+# Указывает основной язык проекта и главный файл
 language = "python3"
 entrypoint = "main.py"
-# A list of globs that specify which files and directories should
-# be hidden in the workspace.
+# БЛОК 3: СКРЫТЫЕ ФАЙЛЫ И ДИРЕКТОРИИ
+# Определяет, какие файлы не отображаются в рабочей области
 hidden = ["venv", ".config", "**/__pycache__", "**/.mypy_cache", "**/*.pyc"]
+# БЛОК 4: ВЕРСИЯ PYTHON
+# Указывает версию интерпретатора Python для проекта
 modules = ["python-3.11"]
-
-# Specifies which nix channel to use when building the environment.
+# БЛОК 5: НАСТРОЙКИ NIX ОКРУЖЕНИЯ
+# Определяет канал пакетов и дополнительные системные зависимости
 [nix]
 channel = "stable-22_11"
 packages = ["gdb"]
-
+# БЛОК 6: ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ
+# Место для определения переменных типа API_KEY, DATABASE_URL и т.д.
 [env]
-
-# Enable unit tests. This is only supported for a few languages.
+# БЛОК 7: НАСТРОЙКИ UNIT-ТЕСТИРОВАНИЯ
+# Включает поддержку автоматического тестирования для Python
 [unitTest]
 language = "python3"
-
-# These are the files that need to be preserved when this 
-# language template is used as the base language template
-# for Python repos imported from GitHub
+# БЛОК 8: НАСТРОЙКИ ИМПОРТА ИЗ GITHUB
+# Определяет файлы, сохраняемые при импорте Python-проекта из GitHub
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix", ".config", "venv"]
-
+# БЛОК 9: НАСТРОЙКИ РАЗВЕРТЫВАНИЯ
+# Команда для запуска приложения в production-среде
 [deployment]
 run = ["sh", "-c", "python3 main.py"]
-
+# БЛОК 10: ПРОБРОС ПОРТОВ
+# Маппинг внутреннего порта Flask (5000) на внешний HTTP-порт (80)
+# Позволяет открывать веб-приложение без указания порта в URL
 [[ports]]
 localPort = 5000
 externalPort = 80
-
+# БЛОК 11: ЭКСПЕРТНЫЙ РЕЖИМ АГЕНТА
+# Включает расширенные возможности настройки рабочей среды
 [agent]
 expertMode = true
-
+# БЛОК 12: РАБОЧИЕ ПРОЦЕССЫ (WORKFLOWS)
+# Определяет кнопку запуска и процессы, выполняемые при её нажатии
 [workflows]
 runButton = "Project"
-
+# БЛОК 13: ОСНОВНОЙ РАБОЧИЙ ПРОЦЕСС
+# Запускает приложение в параллельном режиме
 [[workflows.workflow]]
 name = "Project"
 mode = "parallel"
 author = "agent"
-
 [[workflows.workflow.tasks]]
 task = "workflow.run"
 args = "Start application"
-
+# БЛОК 14: ПРОЦЕСС ЗАПУСКА ПРИЛОЖЕНИЯ
+# Выполняет команду python3 main.py и ожидает запуска порта 5000
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
-
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python3 main.py"
 waitForPort = 5000
-
+# БЛОК 15: ТИП ВЫВОДА
+# Определяет, что результат работы должен отображаться как веб-страница
 [workflows.workflow.metadata]
 outputType = "webview"

@@ -1,70 +1,51 @@
+<!-- БЛОК 1: ОБЪЯВЛЕНИЕ ТИПА ДОКУМЕНТА И МЕТАДАННЫЕ                         -->
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Roboflow + Replit Example</title>
-
-  <!-- Load roboflow.js, the script that will handle loading and running our computer vision model in the browser -->
+<!--БЛОК 2: ПОДКЛЮЧЕНИЕ ВНЕШНИХ БИБЛИОТЕК И РЕСУРСОВ-->
+  <!-- inferencejs – библиотека для запуска моделей компьютерного зрения в браузере -->
   <script src="https://cdn.jsdelivr.net/npm/inferencejs"></script>
-  
+  <!-- Подключение локальных стилей CSS -->
   <link rel="stylesheet" href="/static/styles.css" />
-
+<!--БЛОК 3: КОНФИГУРАЦИЯ МОДЕЛИ (НАСТРОЙКИ ПО УМОЛЧАНИЮ)  -->
   <script>
-    // Replace the key below with your Roboflow publishable key
+    // Публичный ключ доступа к Roboflow API
     var publishable_key = "rf_l8GLzZgLQL6gZLAin1iU";
-
-    // Change these values to set your model name, version, and the
-    // confidence threshold that must be met for the model to return
-    // a prediction.
-
-    // We recommend setting a low CONFIDENCE_THRESHOLD value while testing
-    // and filtering out predictions by confidence level using the
-    //"Prediction Confidence %" filter
-
-    const CONFIDENCE_THRESHOLD = 0.1;
-    const MODEL_NAME = "microsoft-coco";
-    const MODEL_VERSION = 9;
+    // Конфигурационные параметры модели
+    const CONFIDENCE_THRESHOLD = 0.1;  // ДОСТОВЕРНОСТЬ ПРОГНОЗА для отображения предсказаний
+    const MODEL_NAME = "microsoft-coco";      // Название модели (COCO – 80 классов объектов)
+    const MODEL_VERSION = 9;                  // Версия модели
   </script>
 </head>
-
+<!-- БЛОК 4: BODY – ОТОБРАЖАЕМАЯ ЧАСТЬ СТРАНИЦЫ                             -->
 <body>
   <main>
+    <!-- Заголовок и описание -->
     <h1>Roboflow + Replit Web Example 🚀</h1>
-    <p>Roboflow enables you to build and run custom computer vision models in your browser, on your device (i.e. NVIDIA
-      Jetson, Luxonis OAK, via Docker), and via API.
-    </p>
-    <p>The below example runs <a href="https://universe.roboflow.com/jacob-solawetz/microsoft-coco">Microsoft's
-        COCO</a> model to identify common objects, which is one of 50,000 open source models ready to use on <a
-        href="https://universe.roboflow.com">Roboflow Universe</a></p>
-
-    <p>Using the demo below, you can identify <a href="https://universe.roboflow.com/jacob-solawetz/microsoft-coco">80
-        different objects</a> using your webcam, from people to chairs to cups.</p>
-
+    <p>Roboflow enables you to build and run custom computer vision models...</p>
+    <!-- Элемент для отображения статуса загрузки -->
     <p id="loading">Loading...</p>
-
-    <!-- The canvas below is required -->
+<!-- БЛОК 5: ВИДЖЕТ КОМПЬЮТЕРНОГО ЗРЕНИЯ (CANVAS)                         -->
+    <!-- Canvas – элемент, на котором отрисовываются bounding boxes -->
     <section class="infer-widget">
       <canvas width="640" height="480" id="video_canvas"></canvas>
     </section>
-
+<!-- БЛОК 6: ЭЛЕМЕНТЫ УПРАВЛЕНИЯ (ПОЛЗУНОК НАСТРОЙКИ)                     -->
     <section id="settings">
       <label for="confidence">Prediction Confidence %</label><br>
+      <!-- Ползунок для регулировки ДОСТОВЕРНОСТИ ПРОГНОЗА предсказаний -->
       <input type="range" min="1" max="100" value="60" class="slider" id="confidence">
     </section>
-
+<!-- БЛОК 7: ССЫЛКИ-КНОПКИ ДЛЯ ДОПОЛНИТЕЛЬНЫХ ДЕЙСТВИЙ                    -->
     <section class="links">
       <a href="https://blog.roboflow.com/getting-started-with-roboflow/" class="styled-button">Build a Custom Model</a>
-      <a href="https://universe.roboflow.com" class="styled-button styled-button-turqouise">Explore 50k+
-        Models and Datasets</a>
+      <a href="https://universe.roboflow.com" class="styled-button styled-button-turqouise">Explore 50k+ Models and Datasets</a>
     </section>
-
-    <!-- Load our application logic -->
+<!-- БЛОК 8: ПОДКЛЮЧЕНИЕ КЛИЕНТСКОЙ ЛОГИКИ                                 -->
     <script src="/static/script.js"></script>
   </main>
 </body>
-
 </html>
